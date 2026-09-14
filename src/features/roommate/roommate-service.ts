@@ -1,13 +1,17 @@
-﻿import type {Roommate} from "#/lib/coloc-data.ts";
-import * as fs from "node:fs";
+﻿import type { Dispatch, SetStateAction } from "react";
+import {apiClient} from "#/api-client.ts";
+import type {Roommate} from "#/features/roommate/types/roommate.ts";
 
 export const roommateService = {
-    getRoommates: ():Roommate[]  => {
-        // const filePath = path.join('./', 'src', 'assets', 'roommates.json');
-        const content = fs.readFileSync("./src/assets/roommates.json", "utf8")
-        return JSON.parse(content)
+    getRoommates: async (setRoommate: Dispatch<SetStateAction<Roommate[]>>)  => {
+        const response = await apiClient.get<Roommate[]>(`/api/roommates`);
+        setRoommate(response.data)
+    },
+
+    findRoommateById: (id: number|undefined, roommates:Roommate[]):Roommate|undefined => {
+        if (id === undefined) {
+            return
+        }
+        return roommates.find((value) => id === value.id)
     }
-        // fetch('http://localhost:3000/assets/roommate.json')
-        //     .then((res) => res.json())
-        //     .then((data) => {setRoommate(data as Roommate[])}),
 }

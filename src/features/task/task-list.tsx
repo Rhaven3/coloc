@@ -1,56 +1,39 @@
-﻿import {Panel, skin} from "#/shared/components/ui.tsx";
-import {colocById, days, type Roommate} from "#/lib/coloc-data.ts";
-import {tasks } from "#/features/task/types/task.ts";
+﻿import {Panel, skin, skins} from "#/shared/components/ui.tsx";
+import {days} from "#/lib/coloc-data.ts";
 import type {Task} from "#/features/task/types/task.ts";
-import {useEffect, useMemo, useState} from "react";
+import {useEffect, useState} from "react";
 import {Avatar} from "@/shared/components/ui"
+import type {TaskListProps} from "#/features/task/types/TaskListProps.ts";
+import {taskService} from "#/features/task/task-service.ts";
 import {roommateService} from "#/features/roommate/roommate-service.ts";
 
-export function TaskList() {
+export function TaskList({roommates}: TaskListProps) {
     const date = new Date();
-    const [decalage, setDecalage] = useState(0);
-    const [roommates, setRoommates] = useState<Roommate[]>();
+    const [tasks, setTasks] = useState<Task[]>([]);
+    // const [decalage, setDecalage] = useState(0);
+    const nbFaites = tasks.filter((t) => t.done).length;
+
     useEffect(() => {
-        setRoommates(roommateService.getRoommates())
-    })
-    const [faites, setFaites] = useState<Record<string, boolean>>(() =>
-        Object.fromEntries(tasks.filter((t) => t.faite).map((t) => [t.id, true])),
-    );
-    const nbFaites = tasks.filter((t) => faites[t.id]).length;
-
-    const attribuerEquitablement = (
-        liste: Task[],
-    ): Record<string, number> => {
-        const map: Record<string, number> = {};
-        liste.forEach((t, i) => {
-            map[t.id] = roommates[(i + decalage) % roommates.length].id;
-        });
-        return map;
-    };
-
-    const attribution = useMemo(
-        () => attribuerEquitablement(tasks),
-        [decalage],
-    );
+        taskService.getTasks(setTasks)
+    }, []);
 
     return (
         <div className="rise rise-d1 lg:col-span-5">
             <Panel
                 title="Planning du ménage"
-                meta={"Aujourd'hui · " + days[date.getDay()-1].long}
+                meta={"Aujourd'hui · " + days[date.getDay() - 1].long}
                 className="h-full"
             >
                 <div className="flex flex-col gap-2">
                     {tasks.map((t) => {
-                        const coloc = colocById(attribution[t.id], roommates);
-                        const s = skin(coloc);
-                        const done = faites[t.id];
+                        const roommate = roommateService.findRoommateById(t.roommateAssigned, roommates);
+                        const s = skin(roommate) ?? skins["default"];
                         return (
                             <button
                                 key={t.id}
                                 type="button"
                                 onClick={() =>
-                                    setFaites((f) => ({...f, [t.id]: !f[t.id]}))
+                                    taskService.toggleTask(t.id, setTasks)
                                 }
                                 className={`group flex items-center gap-3 rounded-xl border border-line bg-panel px-3 py-2.5 text-left transition-colors duration-200 ${s.hover}`}
                             >
@@ -59,7 +42,7 @@ export function TaskList() {
                       >
                         <span
                             className={
-                                done
+                                t.done
                                     ? `size-4 rounded-full ${s.bg}`
                                     : `size-4 rounded border-2 border-current ${s.text} transition-opacity duration-200 group-hover:opacity-60`
                             }
@@ -67,18 +50,18 @@ export function TaskList() {
                       </span>
                                 <span className="min-w-0 flex-1">
                         <span
-                            className={`block truncate text-[13px] font-medium ${done ? "text-sub line-through" : ""}`}
+                            className={`block truncate text-[13px] font-medium ${t.done ? "text-sub line-through" : ""}`}
                         >
-                          {t.nom}
+                          {t.name}
                         </span>
                         <span className="block truncate text-[11px] text-sub">
-                          {t.description} · {t.recurrence} · {t.jour.short}
+                          {t.description} · {t.recurrence} · {days[t.day - 1].short}
                         </span>
                       </span>
                                 <span className="flex items-center gap-1.5">
-                        <Avatar coloc={coloc}/>
+                        <Avatar roommate={roommate}/>
                         <span className={`text-[11px] font-medium ${s.text}`}>
-                          {coloc.nom}
+                          {roommate?.name ?? "non attribuer"}
                         </span>
                       </span>
                             </button>

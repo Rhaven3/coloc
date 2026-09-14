@@ -1,11 +1,18 @@
 ﻿import {days} from "@/lib/coloc-data"
 import {roommateService} from "#/features/roommate/roommate-service.ts";
 import {getCurrentWeekNumber} from "#/shared/utils.ts";
+import {useEffect, useState} from "react";
+import type {Roommate} from "#/features/roommate/types/roommate.ts";
 
 
 export default function HeaderApp() {
-    const date = new Date(0);
-    const jourActif = date.getDay();
+    const date = new Date();
+    const jourActif = date.getDay() - 1;
+
+    const [roommates, setRoommates] = useState<Roommate[]>([]);
+    useEffect(() => {
+        roommateService.getRoommates(setRoommates)
+    }, []);
 
     // const charge = useMemo(() => {
     //     const base: Record<ColocId, number> = {joya: 0, nova: 0, lila: 0, sola: 0};
@@ -27,7 +34,7 @@ export default function HeaderApp() {
                             Coloc
                         </h1>
                         <span className="font-mono text-[11px] text-sub">
-                  · {roommateService.getRoommates().length} colocataires
+                  · {roommates.length} colocataires
                 </span>
                     </div>
                     <p className="text-[11px] text-sub">Tableau de bord · semaine {getCurrentWeekNumber()}</p>

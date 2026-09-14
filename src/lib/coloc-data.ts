@@ -1,10 +1,4 @@
-export type Roommate = {
-    id: number;
-    nom: string;
-    initiale: string;
-    couleur: string; // tailwind color token name
-};
-
+import type {Roommate} from "#/features/roommate/types/roommate.ts";
 
 export interface Day {
     short: string;
@@ -19,19 +13,6 @@ export const days: Day[] = [
 export const colocById = (id: number, roommates:Roommate[]) => {
         return roommates.find((c) => c.id === id) ?? roommates[0];
 }
-
-export type Recurrence = "quotidien" | "hebdo" | "bi-hebdo" | "mensuel" | "tri-mensuel";
-
-
-
-export const reminders: string[] = [
-    "Nettoyer la plaque de cuisson après l'avoir utilisée.",
-    "Ramasser la vaisselle sèche de l'égouttoir, même si ce n'est pas la sienne.",
-    "Après avoir cuisiné ou mangé à table : un coup d'éponge et/ou de torchon.",
-    "Fermer le micro-ondes après l'avoir utilisé.",
-    "Retirer les cheveux qui traînent dans la douche.",
-    "Tirer la chasse d'eau, même la nuit.",
-];
 
 export type Product = {
     id: string;

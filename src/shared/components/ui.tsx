@@ -1,4 +1,4 @@
-import type { Roommate } from "@/lib/coloc-data";
+import type {Roommate} from "#/features/roommate/types/roommate.ts";
 
 type Skin = {
   bg: string;
@@ -10,6 +10,13 @@ type Skin = {
 
 // Classes écrites en toutes lettres pour rester détectables par Tailwind.
 export const skins: Record<string, Skin> = {
+  default: {
+    bg: "bg-sub",
+    text: "text-sub",
+    soft: "bg-sub/10",
+    hover: "hover:border-sub/40 hover:bg-sub/5",
+    badge: "bg-sub/10 text-sub",
+  },
   joya: {
     bg: "bg-joya",
     text: "text-joya",
@@ -40,22 +47,27 @@ export const skins: Record<string, Skin> = {
   },
 };
 
-export const skin = (c: Roommate) => skins[c.couleur]!;
+export const skin = (r: Roommate|undefined) => {
+  if (r === undefined) {
+    return
+  }
+  return skins[r.color]
+};
 
 export function Avatar({
-  coloc,
+  roommate,
   size = "md",
 }: {
-  coloc: Roommate;
+  roommate: Roommate | undefined;
   size?: "sm" | "md";
 }) {
   const s = size === "sm" ? "size-4 text-[9px]" : "size-6 text-[10px]";
   return (
     <span
-      className={`${s} ${skin(coloc).bg} grid place-items-center rounded-full font-bold text-white`}
+      className={`${s} ${skin(roommate)?.bg ?? ""} grid place-items-center rounded-full font-bold text-white`}
       aria-hidden="true"
     >
-      {coloc.initiale}
+      {roommate?.initial}
     </span>
   );
 }
