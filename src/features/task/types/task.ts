@@ -1,7 +1,7 @@
 ﻿export type Recurrence = "quotidien" | "hebdo" | "bi-hebdo" | "mensuel" | "tri-mensuel";
 
 export type Task = {
-    id: string;
+    id: number;
     name: string;
     description: string;
     recurrence: Recurrence;

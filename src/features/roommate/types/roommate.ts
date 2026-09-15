@@ -4,4 +4,3 @@
     initial: string;
     color: string; // tailwind color token name
 };
-

@@ -7,7 +7,7 @@ export const taskService = {
         const response = await apiClient.get<Task[]>(`/api/tasks`);
         setTasks(response.data)
     },
-    toggleTask: async(id:string, setTasks: Dispatch<SetStateAction<Task[]>>) => {
+    toggleTask: async(id:number, setTasks: Dispatch<SetStateAction<Task[]>>) => {
         const response = await apiClient.patch<Task[]>(`/api/tasks/${id}/toggle`);
         setTasks(response.data)
     }

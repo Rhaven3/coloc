@@ -1,6 +1,6 @@
 import type {Roommate} from "#/features/roommate/types/roommate.ts";
 
-type Skin = {
+export type Skin = {
   bg: string;
   text: string;
   soft: string;
@@ -53,49 +53,3 @@ export const skin = (r: Roommate|undefined) => {
   }
   return skins[r.color]
 };
-
-export function Avatar({
-  roommate,
-  size = "md",
-}: {
-  roommate: Roommate | undefined;
-  size?: "sm" | "md";
-}) {
-  const s = size === "sm" ? "size-4 text-[9px]" : "size-6 text-[10px]";
-  return (
-    <span
-      className={`${s} ${skin(roommate)?.bg ?? ""} grid place-items-center rounded-full font-bold text-white`}
-      aria-hidden="true"
-    >
-      {roommate?.initial}
-    </span>
-  );
-}
-
-export function Panel({
-  title,
-  meta,
-  className = "",
-  children,
-}: {
-  title: string;
-  meta?: string;
-  className?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section
-      className={`flex flex-col rounded-2xl border border-line bg-panel p-4 backdrop-blur-xl ${className}`}
-    >
-      <div className="mb-3 flex items-center justify-between gap-3">
-        <h2 className="font-display text-base font-bold tracking-tight">{title}</h2>
-        {meta ? (
-          <span className="font-mono text-[10px] uppercase tracking-wider text-sub">
-            {meta}
-          </span>
-        ) : null}
-      </div>
-      {children}
-    </section>
-  );
-}
