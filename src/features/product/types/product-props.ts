@@ -1,21 +1,19 @@
 ﻿import type {Roommate} from "#/features/roommate/types/roommate.ts";
-import type {Product} from "#/features/product/types/product.ts";
-import type {Skin} from "#/shared/components/ui.tsx";
+import type {ProductCategory} from "#/features/product/types/product.ts";
 
-export interface ProductListProps {
+export interface ProductCategoryListProps {
     roommates: Roommate[];
-    products: Product[];
+    categories: ProductCategory[];
 }
 
 export interface ProductBudgetProps {
     roommates: Roommate[];
-    products: Product[];
+    categories: ProductCategory[];
 }
 
-export interface ProductCardProps {
-    product: Product;
+export interface ProductCategoryCardProps {
+    category: ProductCategory;
     isLowQuantity: boolean;
-    lastBuyer: Roommate;
-    nextBuyer: Roommate;
-    skin?: Skin
+    lastBuyers: Roommate[];
+    nextBuyers: Roommate[];
 }

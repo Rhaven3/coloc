@@ -1,13 +1,13 @@
-﻿import {euros} from "#/lib/coloc-data.ts";
-import type {ProductBudgetProps} from "#/features/product/types/product-props.ts";
+﻿import type {ProductBudgetProps} from "#/features/product/types/product-props.ts";
 import {useMemo} from "react";
 import {Panel} from "#/shared/components/ui/Panel.tsx";
 import {Avatar} from "#/shared/components/ui/Avatar.tsx";
+import {euros} from "#/lib/utils.ts";
 
-export function ProductBudget({roommates, products}: ProductBudgetProps) {
+export function ProductBudget({roommates, categories}: ProductBudgetProps) {
     const depenses = useMemo(() => {
         const base: Record<number, number> = {1: 0, 2: 0, 3: 0, 4: 0};
-        for (const p of products) base[p.buyer] += p.price;
+        for (const p of categories) base[p.buyers] += p.price;
         return base;
     }, []);
 

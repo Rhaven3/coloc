@@ -1,7 +1,7 @@
 ﻿import {taskService} from "#/features/task/task-service.ts";
-import {days} from "#/lib/coloc-data.ts";
 import type {TaskCardProps} from "#/features/task/types/task-props.ts";
 import {Avatar} from "#/shared/components/ui/Avatar.tsx";
+import {days} from "#/lib/utils.ts";
 
 export function TaskCard({task, setTasks, roommate, skin}: TaskCardProps) {
     return (

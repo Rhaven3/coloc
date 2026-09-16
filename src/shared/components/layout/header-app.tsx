@@ -1,8 +1,8 @@
-﻿import {days} from "@/lib/coloc-data"
-import {roommateService} from "#/features/roommate/roommate-service.ts";
+﻿import {roommateService} from "#/features/roommate/roommate-service.ts";
 import {getCurrentWeekNumber} from "#/shared/utils.ts";
 import {useEffect, useState} from "react";
 import type {Roommate} from "#/features/roommate/types/roommate.ts";
+import {days} from "#/lib/utils.ts";
 
 
 export default function HeaderApp() {
@@ -13,12 +13,6 @@ export default function HeaderApp() {
     useEffect(() => {
         roommateService.getRoommates(setRoommates)
     }, []);
-
-    // const charge = useMemo(() => {
-    //     const base: Record<ColocId, number> = {joya: 0, nova: 0, lila: 0, sola: 0};
-    //     for (const t of taches) base[attribution[t.id]] += 1;
-    //     return base;
-    // }, [attribution]);
 
     return (
         <header
@@ -59,28 +53,6 @@ export default function HeaderApp() {
                     ))}
                 </div>
             </div>
-
-            {/*        <div className="flex items-center gap-2 rounded-xl border border-line bg-panel-soft px-3 py-2">*/}
-            {/* <span className="text-[12px] font-medium">*/}
-            {/*  Équité <span className="text-sub">·</span>*/}
-            {/* </span>*/}
-            {/*            <div className="flex overflow-hidden rounded-md">*/}
-            {/*                {colocataires.map((c) => (*/}
-            {/*                    <span*/}
-            {/*                        key={c.id}*/}
-            {/*                        className={`h-2.5 ${skin(c).bg}`}*/}
-            {/*                        style={{width: 6 + charge[c.id] * 6}}*/}
-            {/*                    />*/}
-            {/*                ))}*/}
-            {/*            </div>*/}
-            {/*            <span className="font-mono text-[11px] text-sub">*/}
-            {/*  {Math.max(...Object.values(charge)) -*/}
-            {/*  Math.min(...Object.values(charge)) <=*/}
-            {/*  1*/}
-            {/*      ? "balance OK"*/}
-            {/*      : "à rééquilibrer"}*/}
-            {/* </span>*/}
-            {/*        </div>*/}
         </header>
     )
 }
