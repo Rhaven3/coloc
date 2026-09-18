@@ -1,5 +1,10 @@
 ﻿import type {Roommate} from "#/features/roommate/types/roommate.ts";
-import type {ProductCategory} from "#/features/product/types/product.ts";
+import type {
+    Product,
+    ProductCategory,
+    ProductCategoryDTO,
+    ProductFormValues
+} from "#/features/product/types/product.ts";
 
 export interface ProductCategoryListProps {
     roommates: Roommate[];
@@ -16,4 +21,17 @@ export interface ProductCategoryCardProps {
     isLowQuantity: boolean;
     lastBuyers: Roommate[];
     nextBuyers: Roommate[];
+}
+
+export interface CreateProductButtonProps {
+    categories?: (ProductCategory | ProductCategoryDTO)[];
+    roommates?: Roommate[];
+    onProductCreated?: (product: Omit<Product, "id">) => void | Promise<void>;
+}
+
+export interface CreateProductFormProps {
+    categories?: (ProductCategory | ProductCategoryDTO)[];
+    roommates?: Roommate[];
+    onSubmit: (values: ProductFormValues) => void | Promise<void>;
+    onCancel?: () => void;
 }

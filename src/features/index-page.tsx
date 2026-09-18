@@ -9,6 +9,7 @@ import type {Product, ProductCategory} from "#/features/product/types/product.ts
 import {productService} from "#/features/product/product-service.ts";
 import {Panel} from "#/shared/components/ui/Panel.tsx";
 import {days} from "#/lib/utils.ts";
+import {CreateProductButton} from "#/features/product/components/create-product-button.tsx";
 
 
 export default function Index() {
@@ -26,7 +27,7 @@ export default function Index() {
         productService.getProductCategories(setCategories, products)
     }, [products]);
 
-    if (roommates.length === 0 || categories[0].buyers.length === 0) {
+    if (roommates.length === 0 || categories[0]?.buyers.length === 0) {
         return (<></>)
     }
     return (
@@ -49,12 +50,22 @@ export default function Index() {
             <div className="rise rise-d2 lg:col-span-7">
                 <Panel className="h-full"
                        title="Produits communs"
-                       meta={`Inventaire · ${categories.length}`}
+                       meta={
+                           <div className="flex items-center justify-between gap-20">
+                               <CreateProductButton
+                                   categories={categories}
+                                   roommates={roommates}
+                                   onProductCreated={async (product) => {
+                                       await productService.createProduct(product, setProducts);
+                                   }}
+                               />
+                               Inventaire · {categories.length}
+                           </div>
+                       }
                 >
                     <ProductCategoryList roommates={roommates} categories={categories}/>
                 </Panel>
             </div>
-
             <div className="rise rise-d3 lg:col-span-12">
                 <ProductBudget roommates={roommates} categories={categories}/>
             </div>

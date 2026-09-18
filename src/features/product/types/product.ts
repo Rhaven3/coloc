@@ -24,3 +24,10 @@ export type Product = {
     category: number
     buyer: number;
 };
+
+export type ProductFormValues = {
+    category: number;
+    buyer: number;
+    quantity: number;
+    price: number;
+};

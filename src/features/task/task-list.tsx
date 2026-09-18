@@ -29,8 +29,7 @@ export function TaskList({roommates}: TaskListProps) {
             </div>
             <div className="mt-3 flex items-center justify-between border-t border-line pt-3">
                 <span className="text-[11px] text-sub">
-                  {tasks.length} tâches ·{" "}
-                    <span className="text-nova">{nbFaites} faites</span>
+                  {tasks.length} tâches · <span className="text-nova">{nbFaites} faites</span>
                 </span>
             </div>
         </>

@@ -11,7 +11,21 @@ export const productService = {
         return response.data;
     },
 
-    getProductCategories: async (setProductCategories: Dispatch<SetStateAction<ProductCategory[]>>, products:Product[]) => {
+    getProductCategoriesDTO: async () => {
+        const response = await apiClient.get<ProductCategoryDTO[]>(`/api/product-categories`);
+        return response.data;
+    },
+
+    createProduct: async (product: Omit<Product, "id">, setProducts?: Dispatch<SetStateAction<Product[]>>) => {
+        const response = await apiClient.post<Product>(`/api/products`, product);
+        if (setProducts) {
+            const updatedProducts = await apiClient.get<Product[]>(`/api/products`);
+            setProducts(updatedProducts.data);
+        }
+        return response.data;
+    },
+
+    getProductCategories: async (setProductCategories: Dispatch<SetStateAction<ProductCategory[]>>, products: Product[]) => {
         const response = await apiClient.get<ProductCategoryDTO[]>(`/api/product-categories`);
         const categories = response.data as ProductCategory[];
         for (const category of categories) {

@@ -2,7 +2,7 @@
 
 export function Panel({title, meta, className = "", children,}: {
     title: string;
-    meta?: string;
+    meta?: ReactNode;
     className?: string;
     children: ReactNode;
 }) {
@@ -13,9 +13,9 @@ export function Panel({title, meta, className = "", children,}: {
             <div className="mb-3 flex items-center justify-between gap-3">
                 <h2 className="font-display text-base font-bold tracking-tight">{title}</h2>
                 {meta ? (
-                    <span className="font-mono text-[10px] uppercase tracking-wider text-sub">
-            {meta}
-          </span>
+                    <span className="font-mono text-[11px] uppercase tracking-wider text-sub">
+                        {meta}
+                    </span>
                 ) : null}
             </div>
             {children}

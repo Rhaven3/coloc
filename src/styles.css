@@ -128,7 +128,7 @@
   body {
     background-color: var(--color-canvas);
     color: var(--color-ink);
-    font-family: var(--font-body);
+    font-family: var(--font-body), sans-serif;
     -webkit-font-smoothing: antialiased;
   }
 }
