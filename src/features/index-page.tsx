@@ -30,6 +30,7 @@ export default function Index() {
     if (roommates.length === 0 || categories[0]?.buyers.length === 0) {
         return (<></>)
     }
+    console.log(date.getDay())
     return (
         <>
             <div className="rise rise-d3 lg:col-span-12">
@@ -41,7 +42,7 @@ export default function Index() {
             <div className="rise rise-d1 lg:col-span-5">
                 <Panel className="h-full"
                        title="Planning du ménage"
-                       meta={"Aujourd'hui · " + days[date.getDay() - 1].long}
+                       meta={"Aujourd'hui · " + days[date.getDay()].long}
                 >
                     <TaskList roommates={roommates}/>
                 </Panel>

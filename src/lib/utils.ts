@@ -5,9 +5,9 @@ export interface Day {
 }
 
 export const days: Day[] = [
+    {short: "Dim", long: "Dimanche"},
     {short: "Lun", long: "Lundi"}, {short: "Mar", long: "Mardi"}, {short: "Mer", long: "Mercredi"},
     {short: "Jeu", long: "Jeudi"}, {short: "Ven", long: "Vendredi"}, {short: "Sam", long: "Samedi"},
-    {short: "Dim", long: "Dimanche"}
 ];
 
 export const euros = (n: number) =>

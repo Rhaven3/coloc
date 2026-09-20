@@ -35,3 +35,8 @@ export interface CreateProductFormProps {
     onSubmit: (values: ProductFormValues) => void | Promise<void>;
     onCancel?: () => void;
 }
+
+export interface DialogProductCategoryProps {
+    productCategory: ProductCategory;
+    roommates: Roommate[];
+}

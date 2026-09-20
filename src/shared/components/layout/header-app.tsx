@@ -7,7 +7,7 @@ import {days} from "#/lib/utils.ts";
 
 export default function HeaderApp() {
     const date = new Date();
-    const jourActif = date.getDay() - 1;
+    const jourActif = date.getDay();
 
     const [roommates, setRoommates] = useState<Roommate[]>([]);
     useEffect(() => {
