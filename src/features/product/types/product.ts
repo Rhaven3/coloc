@@ -33,8 +33,8 @@ export type ProductFormValues = {
 };
 
 export type ProductQuantityPatchFormValue = {
-    productId: number;
+    productCategoryId: number;
     value: {
-        quantity: number;
+        soustraction: number;
     }
 };

@@ -53,7 +53,7 @@ export const productService = {
         setProductCategories(categories)
     },
     patchProductQuantity : async (patchValue: ProductQuantityPatchFormValue, setProducts: (value: (((prevState: Product[]) => Product[]) | Product[])) => void) => {
-        const response = await apiClient.patch<Product>(`/api/products§${patchValue.productId}`, patchValue.value);
+        const response = await apiClient.patch<Product>(`/api/products/${patchValue.productCategoryId}`, patchValue.value);
         const updatedProducts = await apiClient.get<Product[]>(`/api/products`);
         setProducts(updatedProducts.data);
         return response.data;

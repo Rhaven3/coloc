@@ -1,20 +1,20 @@
-﻿import type {PatchProductFormProps} from "#/features/product/types/product-props.ts";
+﻿import type {PatchProductCategoryFormProps} from "#/features/product/types/product-props.ts";
 import {useForm} from "@tanstack/react-form";
 import {Label} from "#/shared/components/ui/label.tsx";
 import {Input} from "#/shared/components/ui/input.tsx";
 import {Button} from "#/shared/components/ui/button.tsx";
 import {DialogFooter} from "#/shared/components/ui/dialog.tsx";
 
-export function PatchProductForm({product, onSubmit, onCancel,}: PatchProductFormProps) {
+export function PatchProductCategoryForm({ productCategory, onSubmit, onCancel,}: PatchProductCategoryFormProps) {
     const form = useForm({
         defaultValues: {
-            quantity: product.quantity,
+            quantity: productCategory.quantity,
         },
         onSubmit: async ({value}) => {
             await onSubmit({
-                productId: product.id,
+                productCategoryId: productCategory.id,
                 value: {
-                    quantity: value.quantity,
+                    soustraction: productCategory.quantity - value.quantity,
                 }
             });
         },
@@ -35,7 +35,7 @@ export function PatchProductForm({product, onSubmit, onCancel,}: PatchProductFor
                     onChange: ({value}) => {
                         if (!value) {
                             return "La quantité est nécessaire";
-                        } else if (value > product.quantity) {
+                        } else if (value > productCategory.quantity) {
                             return "La quantité doit être inférieure ou égale à la quantité actuelle";
                         } else if (value < 0) {
                             return "La quantité doit être positive ou égal à zéro";

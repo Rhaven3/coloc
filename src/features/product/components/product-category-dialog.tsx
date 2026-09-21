@@ -11,12 +11,11 @@ import {ProductCategoryCard} from "#/features/product/components/product-categor
 import type {Roommate} from "#/features/roommate/types/roommate.ts";
 import {roommateService} from "#/features/roommate/roommate-service.ts";
 import type {DialogProductCategoryProps} from "#/features/product/types/product-props.ts";
-import {PatchProductForm} from "#/features/product/components/patch-product-form.tsx";
+import {PatchProductCategoryForm} from "#/features/product/components/patch-product-category-form.tsx";
 import type {ProductQuantityPatchFormValue} from "#/features/product/types/product.ts";
 
 export function ProductCategoryDialog({productCategory, roommates, onProductPatched}: DialogProductCategoryProps) {
     const firstBuyer = roommateService.findRoommateById(productCategory.buyers[0], roommates) as Roommate;
-    const firstProduct = productCategory.products[0];
     const nexts = productCategory.buyers.map<Roommate>((roommateId) => roommates[roommateId % roommates.length]);
 
     const [open, setOpen] = useState(false);
@@ -43,8 +42,8 @@ export function ProductCategoryDialog({productCategory, roommates, onProductPatc
                     Il y en a en moins ?
                 </DialogDescription>
             </DialogHeader>
-            <PatchProductForm
-                product={firstProduct}
+            <PatchProductCategoryForm
+                productCategory={productCategory}
                 onSubmit={handleSubmit}
                 onCancel={() => setOpen(false)}
             />

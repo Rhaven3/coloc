@@ -38,8 +38,8 @@ export interface CreateProductFormProps {
     onCancel?: () => void;
 }
 
-export interface PatchProductFormProps {
-    product: Product;
+export interface PatchProductCategoryFormProps {
+    productCategory: ProductCategory;
     onSubmit: (value: ProductQuantityPatchFormValue) => void | Promise<void>;
     onCancel?: () => void;
 }
