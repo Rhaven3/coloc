@@ -1,6 +1,11 @@
 ﻿import type {Dispatch, SetStateAction} from "react";
 import {apiClient} from "#/api-client.ts";
-import type {Product, ProductCategory, ProductCategoryDTO} from "#/features/product/types/product.ts";
+import type {
+    Product,
+    ProductCategory,
+    ProductCategoryDTO,
+    ProductQuantityPatchFormValue
+} from "#/features/product/types/product.ts";
 
 export const productService = {
     getProducts: async (setProducts?: Dispatch<SetStateAction<Product[]>>) => {
@@ -16,12 +21,10 @@ export const productService = {
         return response.data;
     },
 
-    createProduct: async (product: Omit<Product, "id">, setProducts?: Dispatch<SetStateAction<Product[]>>) => {
+    createProduct: async (product: Omit<Product, "id">, setProducts: Dispatch<SetStateAction<Product[]>>) => {
         const response = await apiClient.post<Product>(`/api/products`, product);
-        if (setProducts) {
-            const updatedProducts = await apiClient.get<Product[]>(`/api/products`);
-            setProducts(updatedProducts.data);
-        }
+        const updatedProducts = await apiClient.get<Product[]>(`/api/products`);
+        setProducts(updatedProducts.data);
         return response.data;
     },
 
@@ -48,5 +51,11 @@ export const productService = {
             category.buyers = [...tmpBuyers]
         }
         setProductCategories(categories)
+    },
+    patchProductQuantity : async (patchValue: ProductQuantityPatchFormValue, setProducts: (value: (((prevState: Product[]) => Product[]) | Product[])) => void) => {
+        const response = await apiClient.patch<Product>(`/api/products§${patchValue.productId}`, patchValue.value);
+        const updatedProducts = await apiClient.get<Product[]>(`/api/products`);
+        setProducts(updatedProducts.data);
+        return response.data;
     }
 }

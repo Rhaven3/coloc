@@ -5,7 +5,7 @@ import type {Skin} from "#/shared/components/ui.tsx";
 import {skin} from "#/shared/components/ui.tsx";
 import {TriangleAlert} from "lucide-react";
 
-export function ProductCategoryCard({category, isLowQuantity, nextBuyers, lastBuyers}: ProductCategoryCardProps) {
+export function ProductCategoryCard({category, isLowQuantity, nextBuyers, lastBuyers, ...props}: ProductCategoryCardProps) {
     const lastSkins = lastBuyers.map(last => skin(last) as Skin)
     const nextSkins = nextBuyers.map(next => skin(next) as Skin)
 
@@ -13,6 +13,7 @@ export function ProductCategoryCard({category, isLowQuantity, nextBuyers, lastBu
         <article
             key={category.id}
             className={`rounded-xl border border-line bg-panel p-3 transition-colors duration-200 ${isLowQuantity ? nextSkins[0].hover : lastSkins[0].hover}`}
+            {...props}
         >
             <div className="flex items-start justify-between gap-2">
                 <span className="text-[13px] font-medium">{category.name}</span>

@@ -1,10 +1,10 @@
 ﻿import type {ProductCategoryListProps} from "#/features/product/types/product-props.ts";
 import {ProductCategoryDialog} from "#/features/product/components/product-category-dialog.tsx";
 
-export function ProductCategoryList({roommates, categories}: ProductCategoryListProps) {
+export function ProductCategoryList({roommates, categories, onProductPatched}: ProductCategoryListProps) {
 
     const productCards = categories.map((p) => {
-        return <ProductCategoryDialog productCategory={p} roommates={roommates}/>
+        return <ProductCategoryDialog productCategory={p} roommates={roommates} onProductPatched={onProductPatched}/>
     })
 
     return (

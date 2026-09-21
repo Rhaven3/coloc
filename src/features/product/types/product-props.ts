@@ -3,12 +3,14 @@ import type {
     Product,
     ProductCategory,
     ProductCategoryDTO,
-    ProductFormValues
+    ProductFormValues, ProductQuantityPatchFormValue
 } from "#/features/product/types/product.ts";
+import type {ComponentProps} from "react";
 
 export interface ProductCategoryListProps {
     roommates: Roommate[];
     categories: ProductCategory[];
+    onProductPatched: (patchValue: ProductQuantityPatchFormValue) => void | Promise<void>;
 }
 
 export interface ProductBudgetProps {
@@ -16,7 +18,7 @@ export interface ProductBudgetProps {
     categories: ProductCategory[];
 }
 
-export interface ProductCategoryCardProps {
+export interface ProductCategoryCardProps extends ComponentProps<"article"> {
     category: ProductCategory;
     isLowQuantity: boolean;
     lastBuyers: Roommate[];
@@ -26,7 +28,7 @@ export interface ProductCategoryCardProps {
 export interface CreateProductButtonProps {
     categories?: (ProductCategory | ProductCategoryDTO)[];
     roommates?: Roommate[];
-    onProductCreated?: (product: Omit<Product, "id">) => void | Promise<void>;
+    onProductCreated: (product: Omit<Product, "id">) => void | Promise<void>;
 }
 
 export interface CreateProductFormProps {
@@ -36,7 +38,14 @@ export interface CreateProductFormProps {
     onCancel?: () => void;
 }
 
+export interface PatchProductFormProps {
+    product: Product;
+    onSubmit: (value: ProductQuantityPatchFormValue) => void | Promise<void>;
+    onCancel?: () => void;
+}
+
 export interface DialogProductCategoryProps {
     productCategory: ProductCategory;
     roommates: Roommate[];
+    onProductPatched: (patchValue: ProductQuantityPatchFormValue) => void | Promise<void>;
 }

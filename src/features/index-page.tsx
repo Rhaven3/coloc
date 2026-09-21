@@ -30,7 +30,6 @@ export default function Index() {
     if (roommates.length === 0 || categories[0]?.buyers.length === 0) {
         return (<></>)
     }
-    console.log(date.getDay())
     return (
         <>
             <div className="rise rise-d3 lg:col-span-12">
@@ -64,7 +63,13 @@ export default function Index() {
                            </div>
                        }
                 >
-                    <ProductCategoryList roommates={roommates} categories={categories}/>
+                    <ProductCategoryList
+                        roommates={roommates}
+                        categories={categories}
+                        onProductPatched={async (patchValue) => {
+                            await productService.patchProductQuantity(patchValue, setProducts);
+                        }}
+                    />
                 </Panel>
             </div>
             <div className="rise rise-d3 lg:col-span-12">

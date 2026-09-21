@@ -31,3 +31,10 @@ export type ProductFormValues = {
     quantity: number;
     price: number;
 };
+
+export type ProductQuantityPatchFormValue = {
+    productId: number;
+    value: {
+        quantity: number;
+    }
+};
