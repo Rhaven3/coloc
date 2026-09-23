@@ -5,10 +5,19 @@ import type {Skin} from "#/shared/components/ui.tsx";
 import {skin} from "#/shared/components/ui.tsx";
 import {TriangleAlert} from "lucide-react";
 
-export function ProductCategoryCard({category, isLowQuantity, nextBuyers, lastBuyers, ...props}: ProductCategoryCardProps) {
+export function ProductCategoryCard({
+                                        category,
+                                        isLowQuantity,
+                                        nextBuyers,
+                                        lastBuyers,
+                                        ...props
+                                    }: ProductCategoryCardProps) {
     const lastSkins = lastBuyers.map(last => skin(last) as Skin)
     const nextSkins = nextBuyers.map(next => skin(next) as Skin)
 
+    if (!nextSkins[0] || !lastSkins[0]) {
+        return <></>
+    }
     return (
         <article
             key={category.id}

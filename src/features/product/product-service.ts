@@ -6,6 +6,7 @@ import type {
     ProductCategoryDTO,
     ProductQuantityPatchFormValue
 } from "#/features/product/types/product.ts";
+import type {Receipt} from "#/features/receipt/types/Receipt.ts";
 
 export const productService = {
     getProducts: async (setProducts?: Dispatch<SetStateAction<Product[]>>) => {
@@ -30,6 +31,8 @@ export const productService = {
 
     getProductCategories: async (setProductCategories: Dispatch<SetStateAction<ProductCategory[]>>, products: Product[]) => {
         const response = await apiClient.get<ProductCategoryDTO[]>(`/api/product-categories`);
+        const receiptResponse = await apiClient.get<Receipt[]>(`/api/receipts`);
+        const receipts = receiptResponse.data;
         const categories = response.data as ProductCategory[];
         for (const category of categories) {
             // initialise new properties
@@ -43,7 +46,7 @@ export const productService = {
             const subproducts = products.filter((product) => product.category === category.id);
             for (const subproduct of subproducts) {
 
-                category.price += subproduct.price;
+                category.price += receipts.find((receipt) => receipt.productId === subproduct.id)?.price ?? 0;
                 tmpBuyers.add(subproduct.buyer)
                 category.quantity += subproduct.quantity;
                 category.products.push(subproduct);
@@ -52,7 +55,8 @@ export const productService = {
         }
         setProductCategories(categories)
     },
-    patchProductQuantity : async (patchValue: ProductQuantityPatchFormValue, setProducts: (value: (((prevState: Product[]) => Product[]) | Product[])) => void) => {
+
+    patchProductQuantity: async (patchValue: ProductQuantityPatchFormValue, setProducts: (value: (((prevState: Product[]) => Product[]) | Product[])) => void) => {
         const response = await apiClient.patch<Product>(`/api/products/${patchValue.productCategoryId}`, patchValue.value);
         const updatedProducts = await apiClient.get<Product[]>(`/api/products`);
         setProducts(updatedProducts.data);

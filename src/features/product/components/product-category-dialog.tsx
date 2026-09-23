@@ -15,7 +15,8 @@ import {PatchProductCategoryForm} from "#/features/product/components/patch-prod
 import type {ProductQuantityPatchFormValue} from "#/features/product/types/product.ts";
 
 export function ProductCategoryDialog({productCategory, roommates, onProductPatched}: DialogProductCategoryProps) {
-    const firstBuyer = roommateService.findRoommateById(productCategory.buyers[0], roommates) as Roommate;
+    const firstBuyer = roommateService.findRoommateById(productCategory.buyers[0], roommates);
+
     const nexts = productCategory.buyers.map<Roommate>((roommateId) => roommates[roommateId % roommates.length]);
 
     const [open, setOpen] = useState(false);
@@ -37,7 +38,7 @@ export function ProductCategoryDialog({productCategory, roommates, onProductPatc
         <DialogContent>
             <DialogHeader>
                 <DialogTitle>Éditer le produit commun <span
-                    className={`text-${firstBuyer.color}`}>{productCategory.name}</span></DialogTitle>
+                    className={`text-${firstBuyer?.color}`}>{productCategory.name}</span></DialogTitle>
                 <DialogDescription>
                     Il y en a en moins ?
                 </DialogDescription>

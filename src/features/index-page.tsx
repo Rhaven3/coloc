@@ -27,7 +27,7 @@ export default function Index() {
         productService.getProductCategories(setCategories, products)
     }, [products]);
 
-    if (roommates.length === 0 || categories[0]?.buyers.length === 0) {
+    if (roommates.length === 0) {
         return (<></>)
     }
     return (
