@@ -1,4 +1,4 @@
-﻿import {skin, skins} from "#/shared/components/ui.tsx";
+﻿import {skin} from "#/shared/components/ui.tsx";
 import type {Task} from "#/features/task/types/task.ts";
 import {useEffect, useState} from "react";
 import type {TaskListProps} from "#/features/task/types/task-props.ts";
@@ -23,7 +23,7 @@ export function TaskList({roommates}: TaskListProps) {
                         task={t}
                         roommate={roommate}
                         setTasks={setTasks}
-                        skin={skin(roommate) ?? skins["default"]}
+                        skin={skin(roommate)}
                     />;
                 })}
             </div>

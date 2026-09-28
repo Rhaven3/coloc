@@ -1,6 +1,6 @@
 ﻿
 export type Receipt = {
-    productId: number;
+    productId: string;
     roommateId: number;
     price: number;
     date: string;

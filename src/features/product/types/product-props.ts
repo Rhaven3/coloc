@@ -1,21 +1,25 @@
 ﻿import type {Roommate} from "#/features/roommate/types/roommate.ts";
 import type {
-    Product,
     ProductCategory,
     ProductCategoryDTO,
-    ProductFormValues, ProductQuantityPatchFormValue
+    ProductFormValues,
+    ProductQuantityPatchFormValue
 } from "#/features/product/types/product.ts";
 import type {ComponentProps} from "react";
+import type {Receipt} from "#/features/receipt/types/Receipt.ts";
+import type {BudgetData} from "#/shared/utils.ts";
 
 export interface ProductCategoryListProps {
     roommates: Roommate[];
     categories: ProductCategory[];
     onProductPatched: (patchValue: ProductQuantityPatchFormValue) => void | Promise<void>;
+    buyerRoommate: Record<number, boolean>;
 }
 
 export interface ProductBudgetProps {
     roommates: Roommate[];
-    categories: ProductCategory[];
+    receipts: Receipt[];
+    budget: BudgetData
 }
 
 export interface ProductCategoryCardProps extends ComponentProps<"article"> {
@@ -28,7 +32,7 @@ export interface ProductCategoryCardProps extends ComponentProps<"article"> {
 export interface CreateProductButtonProps {
     categories?: (ProductCategory | ProductCategoryDTO)[];
     roommates?: Roommate[];
-    onProductCreated: (product: Omit<Product, "id">) => void | Promise<void>;
+    onProductCreated: (values: ProductFormValues) => void | Promise<void>;
 }
 
 export interface CreateProductFormProps {
@@ -48,4 +52,5 @@ export interface DialogProductCategoryProps {
     productCategory: ProductCategory;
     roommates: Roommate[];
     onProductPatched: (patchValue: ProductQuantityPatchFormValue) => void | Promise<void>;
+    buyerRoommate: Record<number, boolean>;
 }

@@ -18,7 +18,7 @@ export type ProductCategory = {
 }
 
 export type Product = {
-    id: number;
+    id: string;
     quantity: number;
     category: number
     buyer: number;

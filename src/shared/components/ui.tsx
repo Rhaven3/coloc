@@ -17,6 +17,13 @@ export const skins: Record<string, Skin> = {
         hover: "hover:border-sub/40 hover:bg-sub/5",
         badge: "bg-sub/10 text-sub",
     },
+    error: {
+        bg: "bg-destructive",
+        text: "text-destructive",
+        soft: "bg-destructive/10",
+        hover: "hover:border-destructive/40 hover:bg-destructive/5",
+        badge: "bg-destructive/10 text-destructive",
+    },
     joya: {
         bg: "bg-joya",
         text: "text-joya",
@@ -47,9 +54,9 @@ export const skins: Record<string, Skin> = {
     },
 };
 
-export const skin = (r: Roommate | undefined) => {
-    if (r === undefined) {
-        return
+export const skin = (r:Roommate|undefined|null) => {
+    if (r === undefined || r === null) {
+        return skins["default"]
     }
     return skins[r.color]
 };

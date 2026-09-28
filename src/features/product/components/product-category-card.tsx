@@ -2,7 +2,7 @@
 import {Avatar} from "#/shared/components/ui/Avatar.tsx";
 import {euros} from "#/lib/utils.ts";
 import type {Skin} from "#/shared/components/ui.tsx";
-import {skin} from "#/shared/components/ui.tsx";
+import {skin, skins} from "#/shared/components/ui.tsx";
 import {TriangleAlert} from "lucide-react";
 
 export function ProductCategoryCard({
@@ -12,12 +12,12 @@ export function ProductCategoryCard({
                                         lastBuyers,
                                         ...props
                                     }: ProductCategoryCardProps) {
-    const lastSkins = lastBuyers.map(last => skin(last) as Skin)
-    const nextSkins = nextBuyers.map(next => skin(next) as Skin)
+    const lastSkins = lastBuyers.map(last => skin(last))
+    const error:Skin = skins["error"]
+    const nextSkins = []
+    nextBuyers.map(next => nextSkins.push(skin(next)))
+    if (nextSkins.length === 0) nextSkins.push(error)
 
-    if (!nextSkins[0] || !lastSkins[0]) {
-        return <></>
-    }
     return (
         <article
             key={category.id}
@@ -51,7 +51,13 @@ export function ProductCategoryCard({
                         <span className="text-[11px] text-sub">
                                 {nextBuyers.map((buyer) =>
                                     <span className={`font-medium text-${buyer.color}`}>{buyer.name}, </span>
-                                )} {nextBuyers.length > 1 ? "doivent en acheter" : "doit en acheter"}
+                                )} {
+                                    nextSkins.length === 1
+                                        ? "à acheter"
+                                        : nextBuyers.length > 1
+                                            ? "doivent en acheter"
+                                            : "doit en acheter"
+                                }
                         </span>
                     </>
                     : null

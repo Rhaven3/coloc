@@ -3,7 +3,7 @@ import {apiClient} from "#/api-client.ts";
 import type {
     Product,
     ProductCategory,
-    ProductCategoryDTO,
+    ProductCategoryDTO, ProductFormValues,
     ProductQuantityPatchFormValue
 } from "#/features/product/types/product.ts";
 import type {Receipt} from "#/features/receipt/types/Receipt.ts";
@@ -22,8 +22,8 @@ export const productService = {
         return response.data;
     },
 
-    createProduct: async (product: Omit<Product, "id">, setProducts: Dispatch<SetStateAction<Product[]>>) => {
-        const response = await apiClient.post<Product>(`/api/products`, product);
+    createProduct: async (values: ProductFormValues, setProducts: Dispatch<SetStateAction<Product[]>>) => {
+        const response = await apiClient.post<Product>(`/api/products`, values);
         const updatedProducts = await apiClient.get<Product[]>(`/api/products`);
         setProducts(updatedProducts.data);
         return response.data;

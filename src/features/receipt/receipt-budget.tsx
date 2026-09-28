@@ -1,24 +1,15 @@
 ﻿import type {ProductBudgetProps} from "#/features/product/types/product-props.ts";
-import {useMemo} from "react";
 import {Panel} from "#/shared/components/ui/Panel.tsx";
 import {Avatar} from "#/shared/components/ui/Avatar.tsx";
 import {euros} from "#/lib/utils.ts";
 
-export function ProductBudget({roommates, categories}: ProductBudgetProps) {
-    const depenses = useMemo(() => {
-        const base: Record<number, number> = {1: 0, 2: 0, 3: 0, 4: 0};
-        for (const p of categories) base[p.buyers] += p.price;
-        return base;
-    }, []);
-
-    const total = Object.values(depenses).reduce((a, b) => a + b, 0);
-    const part = total / roommates.length;
-
+export function ReceiptBudget({roommates, receipts, budget}: ProductBudgetProps) {
     return (
-        <Panel title="Budget partagé" meta={`Ce mois · ${euros(total)}`}>
+        <Panel title="Budget partagé" meta={`Ce mois · ${euros(budget.total)}`}>
             <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-4">
                 {roommates.map((c) => {
-                    const solde = depenses[c.id] - part;
+                    let solde = budget.depenses[c.id] - budget.part;
+                    if (!receipts.length) solde = -1;
                     return (
                         <div
                             key={c.id}
@@ -29,12 +20,12 @@ export function ProductBudget({roommates, categories}: ProductBudgetProps) {
                                 <span className="text-[13px] font-medium">{c.name}</span>
                             </div>
                             <div className="mt-2 font-mono text-[13px] font-medium">
-                                {euros(depenses[c.id])}
+                                {receipts.length ? euros(budget.depenses[c.id]) : "0 €"}
                             </div>
                             <div
                                 className={`mt-0.5 text-[11px] font-medium ${solde >= 0 ? "text-nova" : "text-joya"}`}
                             >
-                                {solde >= 0
+                                {solde >= 0 || solde === -1
                                     ? "à couvert ✓"
                                     : `doit ${euros(Math.abs(solde))}`}
                             </div>

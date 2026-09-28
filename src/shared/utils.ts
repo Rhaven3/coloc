@@ -7,3 +7,9 @@
     // @ts-ignore
     return Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
 }
+
+export type BudgetData = {
+    total: number,
+    part: number,
+    depenses: Record<number, number>,
+}
