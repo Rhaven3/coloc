@@ -68,7 +68,7 @@ export default function Index() {
     return (
         <>
             <div className="rise rise-d3 lg:col-span-12">
-                <Panel title="Rappels de vie">
+                <Panel title="Rappels de vie" removeTitleMobile>
                     <ReminderList/>
                 </Panel>
             </div>

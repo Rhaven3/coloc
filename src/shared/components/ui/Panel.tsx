@@ -1,17 +1,18 @@
 ﻿import type {ReactNode} from "react";
 
-export function Panel({title, meta, className = "", children,}: {
+export function Panel({title, meta, className = "", children, removeTitleMobile = false}: {
     title: string;
     meta?: ReactNode;
     className?: string;
     children: ReactNode;
+    removeTitleMobile?: boolean;
 }) {
     return (
         <section
-            className={`flex flex-col rounded-2xl border border-line bg-panel p-4 backdrop-blur-xl ${className}`}
+            className={`flex flex-col rounded-2xl border border-line bg-panel ${removeTitleMobile ? "max-md:p-1 lg:p-4" : "p-4"}  backdrop-blur-xl ${className}`}
         >
             <div className="mb-3 flex items-center justify-between gap-3">
-                <h2 className="font-display text-base font-bold tracking-tight">{title}</h2>
+                <h2 className={`${removeTitleMobile ? "max-md:hidden" : ""} font-display text-base font-bold tracking-tight`}>{title}</h2>
                 {meta ? (
                     <span className="font-mono text-[11px] uppercase tracking-wider text-sub">
                         {meta}
