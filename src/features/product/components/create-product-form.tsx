@@ -5,9 +5,13 @@ import {Input} from "#/shared/components/ui/input.tsx";
 import {Label} from "#/shared/components/ui/label.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "#/shared/components/ui/select.tsx";
 import type {CreateProductFormProps} from "#/features/product/types/product-props.ts";
+import {useRef} from "react";
 
 
 export function CreateProductForm({categories = [], roommates = [], onSubmit, onCancel,}: CreateProductFormProps) {
+    const quantityRef = useRef<HTMLInputElement>(null);
+    const priceRef = useRef<HTMLInputElement>(null);
+
     const form = useForm({
         defaultValues: {
             category: categories[0]?.id ?? 0,
@@ -18,6 +22,16 @@ export function CreateProductForm({categories = [], roommates = [], onSubmit, on
         onSubmit: async ({value}) => {
             await onSubmit(value);
         },
+        validators: {
+            onSubmit: ({ value }) => {
+                if (Number(value.quantity) <= 0) {
+                    return "La quantité doit être supérieure à 0";
+                }
+                if (Number(value.price) < 0) {
+                    return "Le prix ne peut pas être négatif";
+                }
+            }
+        }
     });
 
     return (
@@ -102,15 +116,7 @@ export function CreateProductForm({categories = [], roommates = [], onSubmit, on
             </form.Field>
 
             <div className="grid grid-cols-2 gap-3">
-                <form.Field
-                    name="quantity"
-                    validators={{
-                        onChange: ({value}) =>
-                            Number(value) <= 0
-                                ? "La quantité doit être supérieure à 0"
-                                : undefined,
-                    }}
-                >
+                <form.Field name="quantity">
                     {(field) => (
                         <div className="flex flex-col gap-1.5">
                             <Label htmlFor={field.name}>Quantité</Label>
@@ -118,11 +124,11 @@ export function CreateProductForm({categories = [], roommates = [], onSubmit, on
                                 id={field.name}
                                 name={field.name}
                                 type="number"
-                                min={1}
-                                value={field.state.value}
+                                placeholder="1"
+                                ref={quantityRef}
+                                onFocus={() => quantityRef.current!.select()}
                                 onBlur={field.handleBlur}
                                 className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                                onChange={(e) => field.handleChange(Number(e.target.value))}
                             />
                             {field.state.meta.errors.length > 0 ? (
                                 <p className="text-xs text-destructive">
@@ -133,15 +139,7 @@ export function CreateProductForm({categories = [], roommates = [], onSubmit, on
                     )}
                 </form.Field>
 
-                <form.Field
-                    name="price"
-                    validators={{
-                        onChange: ({value}) =>
-                            Number(value) < 0
-                                ? "Le prix ne peut pas être négatif"
-                                : undefined,
-                    }}
-                >
+                <form.Field name="price">
                     {(field) => (
                         <div className="flex flex-col gap-1.5">
                             <Label htmlFor={field.name}>Prix (€)</Label>
@@ -149,12 +147,12 @@ export function CreateProductForm({categories = [], roommates = [], onSubmit, on
                                 id={field.name}
                                 name={field.name}
                                 type="number"
-                                min={0}
                                 step="0.01"
-                                value={field.state.value}
+                                placeholder="0.00"
+                                ref={priceRef}
+                                onFocus={() => priceRef.current!.select()}
                                 onBlur={field.handleBlur}
                                 className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                                onChange={(e) => field.handleChange(Number(e.target.value))}
                             />
                             {field.state.meta.errors.length > 0 ? (
                                 <p className="text-xs text-destructive">

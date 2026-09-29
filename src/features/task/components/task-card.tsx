@@ -18,17 +18,21 @@ export function TaskCard({task, setTasks, roommate, skin}: TaskCardProps) {
                 }/>
             </span>
             <span className="min-w-0 flex-1">
-                <span className={`block truncate text-[13px] font-medium ${task.done ? "text-sub line-through" : ""}`}>
+                <span className={`block truncate text-[15px] max-md:font-bold lg:text-[13px] font-medium max-md:text-center ${task.done ? "text-sub line-through" : ""}`}>
                     {task.name}
                 </span>
-                <span className="block truncate text-[11px] text-sub">
-                    {task.description} · {task.recurrence} · {days[task.day - 1].short}
+                <span className="block truncate text-[12px] max-md:text-center  text-sub lg:hidden">
+                    {task.description}
+                </span>
+
+                <span className="block truncate text-[11px] max-md:text-center text-sub">
+                    <span className={"max-md:hidden"}>{task.description} ·</span> {task.recurrence} · {days[task.day - 1].short}
                 </span>
             </span>
             <span className="flex items-center gap-1.5">
                 <Avatar roommate={roommate}/>
-                <span className={`text-[11px] font-medium ${skin.text}`}>
-                  {roommate?.name ?? "non attribuer"}
+                <span className={`text-[11px]  font-medium ${skin.text}`}>
+                  {roommate?.name ?? ""}
                 </span>
             </span>
         </button>

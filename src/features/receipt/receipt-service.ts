@@ -11,14 +11,11 @@ export const receiptService = {
         return response.data;
     },
     getMonthlyReceipts: async (setReceipts?: Dispatch<SetStateAction<Receipt[]>>) => {
-        const response = await apiClient.get<Receipt[]>(`/api/receipts/monthly`);
+        const response = await apiClient.get<Receipt[]>(`/api/receipts`);
 
         const actualMonth = new Date().getMonth()
-        console.log("eheh")
-        console.log(actualMonth)
         const filtered = response.data.filter(r => {
             const date = new Date(r.date)
-            console.log(date)
             return date.getMonth() === actualMonth
         })
 
@@ -29,3 +26,4 @@ export const receiptService = {
         return filtered;
     },
 }
+

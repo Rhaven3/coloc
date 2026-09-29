@@ -4,8 +4,17 @@ import {Label} from "#/shared/components/ui/label.tsx";
 import {Input} from "#/shared/components/ui/input.tsx";
 import {Button} from "#/shared/components/ui/button.tsx";
 import {DialogFooter} from "#/shared/components/ui/dialog.tsx";
+import {useRef} from "react";
 
 export function PatchProductCategoryForm({ productCategory, onSubmit, onCancel,}: PatchProductCategoryFormProps) {
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    const handleFocus = () => {
+        if (inputRef.current) {
+            inputRef.current.select();
+        }
+    };
+
     const form = useForm({
         defaultValues: {
             quantity: productCategory.quantity,
@@ -33,9 +42,7 @@ export function PatchProductCategoryForm({ productCategory, onSubmit, onCancel,}
                 name="quantity"
                 validators={{
                     onChange: ({value}) => {
-                        if (!value) {
-                            return "La quantité est nécessaire";
-                        } else if (value > productCategory.quantity) {
+                        if (value > productCategory.quantity) {
                             return "La quantité doit être inférieure ou égale à la quantité actuelle";
                         } else if (value < 0) {
                             return "La quantité doit être positive ou égal à zéro";
@@ -50,9 +57,12 @@ export function PatchProductCategoryForm({ productCategory, onSubmit, onCancel,}
                             id={field.name}
                             name={field.name}
                             type="number"
-                            min={1}
+                            min={0}
+                            max={productCategory.quantity}
                             value={field.state.value}
                             onBlur={field.handleBlur}
+                            ref={inputRef}
+                            onFocus={handleFocus}
                             className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             onChange={(e) => field.handleChange(Number(e.target.value))}
                         />

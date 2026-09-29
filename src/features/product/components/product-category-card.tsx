@@ -48,11 +48,11 @@ export function ProductCategoryCard({
                 {isLowQuantity ?
                     <>
                         <TriangleAlert className={nextSkins[0].text}/>
-                        <span className="text-[11px] text-sub">
+                        <span className={`text-[11px]  ${nextBuyers.length === 0 ? 'text-destructive' : 'text-sub'}`}>
                                 {nextBuyers.map((buyer) =>
                                     <span className={`font-medium text-${buyer.color}`}>{buyer.name}, </span>
                                 )} {
-                                    nextSkins.length === 1
+                                    nextBuyers.length === 0
                                         ? "à acheter"
                                         : nextBuyers.length > 1
                                             ? "doivent en acheter"
