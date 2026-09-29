@@ -125,6 +125,7 @@ export function CreateProductForm({categories = [], roommates = [], onSubmit, on
                                 name={field.name}
                                 type="number"
                                 placeholder="1"
+                                min={1}
                                 ref={quantityRef}
                                 onFocus={() => quantityRef.current!.select()}
                                 onBlur={field.handleBlur}
@@ -149,6 +150,7 @@ export function CreateProductForm({categories = [], roommates = [], onSubmit, on
                                 type="number"
                                 step="0.01"
                                 placeholder="0.00"
+                                min={0}
                                 ref={priceRef}
                                 onFocus={() => priceRef.current!.select()}
                                 onBlur={field.handleBlur}
