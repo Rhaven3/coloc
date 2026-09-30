@@ -4,7 +4,7 @@ import type {Roommate} from "#/features/roommate/types/roommate.ts";
 
 export const roommateService = {
     getRoommates: async (setRoommate: Dispatch<SetStateAction<Roommate[]>>)  => {
-        const response = await apiClient.get<Roommate[]>(`/api/roommates`);
+        const response = await apiClient.get<Roommate[]>(`/roommates`);
         setRoommate(response.data)
     },
 

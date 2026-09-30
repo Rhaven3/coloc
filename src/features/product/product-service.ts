@@ -10,7 +10,7 @@ import type {Receipt} from "#/features/receipt/types/Receipt.ts";
 
 export const productService = {
     getProducts: async (setProducts?: Dispatch<SetStateAction<Product[]>>) => {
-        const response = await apiClient.get<Product[]>(`/api/products`);
+        const response = await apiClient.get<Product[]>(`/products`);
         if (setProducts) {
             setProducts(response.data)
         }
@@ -18,20 +18,20 @@ export const productService = {
     },
 
     getProductCategoriesDTO: async () => {
-        const response = await apiClient.get<ProductCategoryDTO[]>(`/api/product-categories`);
+        const response = await apiClient.get<ProductCategoryDTO[]>(`/product-categories`);
         return response.data;
     },
 
     createProduct: async (values: ProductFormValues, setProducts: Dispatch<SetStateAction<Product[]>>) => {
-        const response = await apiClient.post<Product>(`/api/products`, values);
-        const updatedProducts = await apiClient.get<Product[]>(`/api/products`);
+        const response = await apiClient.post<Product>(`/products`, values);
+        const updatedProducts = await apiClient.get<Product[]>(`/products`);
         setProducts(updatedProducts.data);
         return response.data;
     },
 
     getProductCategories: async (setProductCategories: Dispatch<SetStateAction<ProductCategory[]>>, products: Product[]) => {
-        const response = await apiClient.get<ProductCategoryDTO[]>(`/api/product-categories`);
-        const receiptResponse = await apiClient.get<Receipt[]>(`/api/receipts`);
+        const response = await apiClient.get<ProductCategoryDTO[]>(`/product-categories`);
+        const receiptResponse = await apiClient.get<Receipt[]>(`/receipts`);
         const receipts = receiptResponse.data;
         const categories = response.data as ProductCategory[];
         for (const category of categories) {
@@ -57,8 +57,8 @@ export const productService = {
     },
 
     patchProductQuantity: async (patchValue: ProductQuantityPatchFormValue, setProducts: (value: (((prevState: Product[]) => Product[]) | Product[])) => void) => {
-        const response = await apiClient.patch<Product>(`/api/products/${patchValue.productCategoryId}`, patchValue.value);
-        const updatedProducts = await apiClient.get<Product[]>(`/api/products`);
+        const response = await apiClient.patch<Product>(`/products/${patchValue.productCategoryId}`, patchValue.value);
+        const updatedProducts = await apiClient.get<Product[]>(`/products`);
         setProducts(updatedProducts.data);
         return response.data;
     }

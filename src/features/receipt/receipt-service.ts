@@ -4,14 +4,14 @@ import {apiClient} from "#/api-client.ts";
 
 export const receiptService = {
     getReceipts: async (setReceipts?: Dispatch<SetStateAction<Receipt[]>>) => {
-        const response = await apiClient.get<Receipt[]>(`/api/receipts`);
+        const response = await apiClient.get<Receipt[]>(`/receipts`);
         if (setReceipts) {
             setReceipts(response.data)
         }
         return response.data;
     },
     getMonthlyReceipts: async (setReceipts?: Dispatch<SetStateAction<Receipt[]>>) => {
-        const response = await apiClient.get<Receipt[]>(`/api/receipts`);
+        const response = await apiClient.get<Receipt[]>(`/receipts`);
 
         const actualMonth = new Date().getMonth()
         const filtered = response.data.filter(r => {
@@ -26,4 +26,3 @@ export const receiptService = {
         return filtered;
     },
 }
-

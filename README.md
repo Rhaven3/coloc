@@ -17,6 +17,8 @@ To build this application for production:
 npm run build
 ```
 
+Set `VITE_API_BASE_URL` in the build environment to the API base URL, including its path prefix. For example, use `/api` when the production web server proxies `/api` requests to the backend, or `https://api.example.com/api` when the API is hosted separately. This value is included in the browser bundle, so it must not contain secrets. The development server proxies `/api` to `http://localhost:3000`.
+
 ## Styling
 
 This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
