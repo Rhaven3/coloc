@@ -129,6 +129,7 @@ export function CreateProductForm({categories = [], roommates = [], onSubmit, on
                                 ref={quantityRef}
                                 onFocus={() => quantityRef.current!.select()}
                                 onBlur={field.handleBlur}
+                                onChange={e => field.handleChange(parseInt(e.target.value))}
                                 className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             />
                             {field.state.meta.errors.length > 0 ? (
@@ -154,6 +155,7 @@ export function CreateProductForm({categories = [], roommates = [], onSubmit, on
                                 ref={priceRef}
                                 onFocus={() => priceRef.current!.select()}
                                 onBlur={field.handleBlur}
+                                onChange={e => field.handleChange(parseInt(e.target.value))}
                                 className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             />
                             {field.state.meta.errors.length > 0 ? (

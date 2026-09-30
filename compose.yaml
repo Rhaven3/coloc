@@ -1,0 +1,28 @@
+services:
+  api:
+    build:
+      context: ../colocApi
+    environment:
+      DATA_DIR: /app/data
+      HOST: 0.0.0.0
+      PORT: 3000
+    volumes:
+      - api-data:/app/data
+    expose:
+      - "3000"
+
+  app:
+    build:
+      context: .
+    depends_on:
+      api:
+        condition: service_healthy
+    environment:
+      API_BASE_URL: http://api:3000
+      HOST: 0.0.0.0
+      PORT: 5174
+    ports:
+      - "${APP_PORT:-5174}:5174"
+
+volumes:
+  api-data:

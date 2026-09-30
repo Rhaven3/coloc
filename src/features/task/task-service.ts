@@ -11,7 +11,8 @@ export const taskService = {
     },
     toggleTask: async(id:number, setTasks: Dispatch<SetStateAction<Task[]>>) => {
         const response = await apiClient.patch<Task[]>(`/tasks/${id}/toggle`);
-        setTasks(response.data)
+        const orderedTasks = response.data.sort((a, b) => recurrenceOrder[a.recurrence] - recurrenceOrder[b.recurrence]);
+        setTasks(orderedTasks)
     },
 
 }

@@ -21,15 +21,26 @@ The application calls its API through the same-origin `/api` path. In developmen
 
 ## Docker
 
-Build and run the production image:
+Build and start the app with its API on a private Docker network:
 
 ```bash
-docker build -t coloc_app .
-docker run --rm -p 5174:5174 -e API_BASE_URL=http://host.docker.internal:3000 coloc_app
-#docker run --rm -p 5174:5174 --name coloc_app  coloc_app 
+docker compose up --build -d
 ```
 
-The container proxies `/api` requests to `API_BASE_URL`, so the browser communicates only with the application origin and does not need cross-origin API access. Set `API_BASE_URL` to the API origin (without `/api`): `http://host.docker.internal:3000` when the API runs on the Docker host, or `http://api:3000` when it is another service on the same Docker network. The application listens on port `5174` inside the container. The first port in `-p` is the host port, so choose a different host port without changing the container using, for example, `-p 8080:5174`.
+Compose builds both containers, creates their private network, waits for the API healthcheck, and persists API JSON data in a named volume. Only the app is published; the API remains reachable only inside the Docker network. The app proxies `/api` to the API, so browser requests stay same-origin and avoid CORS.
+
+The app is available at `http://localhost:5174` by default. Choose a different host port with `APP_PORT`, for example:
+
+```powershell
+$env:APP_PORT = 8080
+docker compose up --build -d
+```
+
+To stop the services without deleting the persisted API data:
+
+```bash
+docker compose down
+```
 
 ## Styling
 
