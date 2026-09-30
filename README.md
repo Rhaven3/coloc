@@ -17,7 +17,19 @@ To build this application for production:
 npm run build
 ```
 
-Set `VITE_API_BASE_URL` in the build environment to the API base URL, including its path prefix. For example, use `/api` when the production web server proxies `/api` requests to the backend, or `https://api.example.com/api` when the API is hosted separately. This value is included in the browser bundle, so it must not contain secrets. The development server proxies `/api` to `http://localhost:3000`.
+The application calls its API through the same-origin `/api` path. In development, Vite proxies these requests to `http://localhost:3000`.
+
+## Docker
+
+Build and run the production image:
+
+```bash
+docker build -t coloc_app .
+docker run --rm -p 5174:5174 -e API_BASE_URL=http://host.docker.internal:3000 coloc_app
+#docker run --rm -p 5174:5174 --name coloc_app  coloc_app 
+```
+
+The container proxies `/api` requests to `API_BASE_URL`, so the browser communicates only with the application origin and does not need cross-origin API access. Set `API_BASE_URL` to the API origin (without `/api`): `http://host.docker.internal:3000` when the API runs on the Docker host, or `http://api:3000` when it is another service on the same Docker network. The application listens on port `5174` inside the container. The first port in `-p` is the host port, so choose a different host port without changing the container using, for example, `-p 8080:5174`.
 
 ## Styling
 
