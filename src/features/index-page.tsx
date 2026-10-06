@@ -37,12 +37,14 @@ export default function Index() {
     // BUDGET
     const depenses = useMemo(() => {
         const base: Record<number, number> = {};
+        for (const roommate of roommates) {
+            base[roommate.id] = 0;
+        }
         for (const r of receipts) {
-            if (!base[r.roommateId]) base[r.roommateId] = 0;
-            base[r.roommateId] += r.price
+            base[r.roommateId] = (base[r.roommateId] ?? 0) + r.price;
         }
         return base;
-    }, [receipts]);
+    }, [receipts, roommates]);
 
     const total = Object.values(depenses).reduce((a, b) => a + b, 0);
     const part = roommates.length > 0 ? total / roommates.length : 0;

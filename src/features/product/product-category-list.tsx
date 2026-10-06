@@ -5,6 +5,7 @@ export function ProductCategoryList({roommates, categories, onProductPatched, bu
 
     const productCards = categories.map((p) => {
         return <ProductCategoryDialog
+            key={"p-category-"+p.id}
             productCategory={p}
             roommates={roommates}
             onProductPatched={onProductPatched}

@@ -25,7 +25,9 @@ export function ReminderList() {
     return (
         <div className="grid grid-cols-1 lg:gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {reminders.map((r, i) => (
-                <div className="max-md:flex max-md:flex-row max-md:justify-items-end max-md:items-center max-md:pl-3">
+                <div
+                    key={"reminder-"+i}
+                    className="max-md:flex max-md:flex-row max-md:justify-items-end max-md:items-center max-md:pl-3">
                     <Quote className={`${i === rappelIndex ? "lg:hidden" : "hidden"} `}/>
                     <p key={r}
                        className={`${i === rappelIndex ? "" : "max-md:hidden"}  

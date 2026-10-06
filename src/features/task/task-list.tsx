@@ -20,6 +20,7 @@ export function TaskList({roommates}: TaskListProps) {
                 {tasks.map((t) => {
                     const roommate = roommateService.findRoommateById(t.roommateAssigned, roommates);
                     return <TaskCard
+                        key={"task-"+t.id}
                         task={t}
                         roommate={roommate}
                         setTasks={setTasks}

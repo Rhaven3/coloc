@@ -20,7 +20,6 @@ export function ProductCategoryCard({
 
     return (
         <article
-            key={category.id}
             className={`rounded-xl border border-line bg-panel p-3 transition-colors duration-200 ${isLowQuantity ? nextSkins[0].hover : lastSkins[0].hover}`}
             {...props}
         >
@@ -36,7 +35,9 @@ export function ProductCategoryCard({
                 {euros(category.price)}
                 <div className="flex items-center justify-end gap-2">
                     {lastBuyers.map((buyer) => (
-                        <span className={`flex items-center gap-1 text-[11px] font-medium text-${buyer.color}`}>
+                        <span
+                            key={"lbuyer-"+buyer.id+"-"+category.id}
+                            className={`flex items-center gap-1 text-[11px] font-medium text-${buyer.color}`}>
                         <Avatar roommate={buyer} size="sm"/>
                             {buyer.name}
                     </span>
@@ -50,7 +51,9 @@ export function ProductCategoryCard({
                         <TriangleAlert className={nextSkins[0].text}/>
                         <span className={`text-[11px]  ${nextBuyers.length === 0 ? 'text-destructive' : 'text-sub'}`}>
                                 {nextBuyers.map((buyer) =>
-                                    <span className={`font-medium text-${buyer.color}`}>{buyer.name}, </span>
+                                    <span
+                                        key={"nbuyer-"+buyer.id+"-"+category.id}
+                                        className={`font-medium text-${buyer.color}`}>{buyer.name}, </span>
                                 )} {
                                     nextBuyers.length === 0
                                         ? "à acheter"
