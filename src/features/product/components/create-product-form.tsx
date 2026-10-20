@@ -17,7 +17,7 @@ export function CreateProductForm({categories = [], roommates = [], onSubmit, on
             category: categories[0]?.id ?? 0,
             buyer: roommates[0]?.id ?? 0,
             quantity: 1,
-            price: 0,
+            price: 0.00,
         },
         onSubmit: async ({value}) => {
             await onSubmit(value);
@@ -151,11 +151,11 @@ export function CreateProductForm({categories = [], roommates = [], onSubmit, on
                                 type="number"
                                 step="0.01"
                                 placeholder="0.00"
-                                min={0}
+                                min={0.00}
                                 ref={priceRef}
                                 onFocus={() => priceRef.current!.select()}
                                 onBlur={field.handleBlur}
-                                onChange={e => field.handleChange(parseInt(e.target.value))}
+                                onChange={e => field.handleChange(parseFloat(e.target.value))}
                                 className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             />
                             {field.state.meta.errors.length > 0 ? (
