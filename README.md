@@ -29,7 +29,7 @@ docker compose up --build -d
 
 Compose builds both containers, creates their private network, waits for the API healthcheck, and persists API JSON data in a named volume. Only the app is published; the API remains reachable only inside the Docker network. The app proxies `/api` to the API, so browser requests stay same-origin and avoid CORS.
 
-The app is available at `http://localhost:5174` by default. Choose a different host port with `APP_PORT`, for example:
+The app is available at `http://localhost` (host port 80) by default. Choose a different host port with `APP_PORT`, for example:
 
 ```powershell
 $env:APP_PORT = 8080
